@@ -56,8 +56,10 @@ def load_data(csv_files='./data/csv_labels/test_set.csv', data_dir = './data/tes
             ID.append(cand_name)
             y.append(label)
             with h5py.File(data_dir+str(cand_name), 'r') as f:
-                dm_t = np.array(f['data_dm_time'])
-                fq_t = np.array(f['data_freq_time']).T
+                #dm_t = np.array(f['data_dm_time'])
+                dm_t = np.array(f['cand']['ml']['dm_time'])
+                #fq_t = np.array(f['data_freq_time']).T
+                fq_t = np.array(f['cand']['ml']['freq_time'])
                 dm_time.append(dm_t); fq_time.append(fq_t)
 
     dm_time_img = np.expand_dims(np.array(dm_time),1)
@@ -75,7 +77,7 @@ def load_data(csv_files='./data/csv_labels/test_set.csv', data_dir = './data/tes
     if n_images == 'fq_time':
         X_img = fq_time_img.reshape(fq_time_img.shape[0], 256, 256 , 1)
 
-    X_img = X_img/255.
+    #X_img = X_img/255.
 
     ID = np.array(ID)
     Y = np.array(y).astype(np.int32)

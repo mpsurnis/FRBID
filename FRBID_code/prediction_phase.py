@@ -43,8 +43,10 @@ def load_candidate(data_dir = './data/test_set/',n_images = 'dm_fq_time'):
      
     for i in range(len(list_hdf5_filename)):
         with h5py.File(str(list_hdf5_path[i]), 'r') as f:
-            dm_t = np.array(f['data_dm_time'])
-            fq_t = np.array(f['data_freq_time']).T
+            #dm_t = np.array(f['data_dm_time'])
+            dm_t = np.array(f['cand']['ml']['dm_time'])
+            #fq_t = np.array(f['data_freq_time']).T
+            fq_t = np.array(f['cand']['ml']['freq_time'])
             dm_time.append(dm_t); fq_time.append(fq_t); ID.append(list_hdf5_filename[i])
 
     dm_time_img = np.expand_dims(np.array(dm_time),1)
@@ -62,7 +64,7 @@ def load_candidate(data_dir = './data/test_set/',n_images = 'dm_fq_time'):
     if n_images == 'fq_time':
         X_img = fq_time_img.reshape(fq_time_img.shape[0], 256, 256 , 1)
 
-    X_img = X_img/255.
+    #X_img = X_img/255.
 
     ID = np.array(ID)
     X_img = X_img.astype(np.float32)
